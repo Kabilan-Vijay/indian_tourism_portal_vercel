@@ -26,8 +26,11 @@ app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
 # Ensure upload folder exists when possible (non-read-only filesystems).
 # On Vercel (and similar serverless platforms), the deployment filesystem is read-only.
-if not (os.environ.get("VERCEL") or os.environ.get("VERCEL_ENV")):
+# Wrap in try/except so it won’t crash when folder creation fails.
+try:
     os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+except OSError:
+    pass
 
 
 def allowed_file(filename):

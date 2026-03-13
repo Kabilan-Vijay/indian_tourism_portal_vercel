@@ -26,13 +26,11 @@ if not UPLOAD_FOLDER:
 ALLOWED_IMAGE_EXTENSIONS = {"png", "jpg", "jpeg", "gif"}
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
-# Ensure upload folder exists when possible (non-read-only filesystems).
-# On Vercel (and similar serverless platforms), the deployment filesystem is read-only.
-# Wrap in try/except so it won’t crash when folder creation fails.
-try:
+# Ensure upload folder exists when possible.
+# Avoid creating folders under the read-only deployment filesystem (e.g. /var/task).
+# /tmp is writable on Vercel, so only create when using /tmp.
+if UPLOAD_FOLDER.startswith("/tmp"):
     os.makedirs(UPLOAD_FOLDER, exist_ok=True)
-except OSError:
-    pass
 
 
 def allowed_file(filename):

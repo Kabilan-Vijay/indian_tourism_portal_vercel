@@ -1,0 +1,13 @@
+blinker
+cffi
+click
+colorama
+cryptography
+Flask
+itsdangerous
+Jinja2
+MarkupSafe
+mysql-connector
+pycparser
+psycopg2-binary
+Werkzeug

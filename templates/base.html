@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Indian Tourism Portal</title>
+
+<link rel="stylesheet"
+href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+<header class="navbar">
+
+    <div class="navbar-left">
+        <a href="/" class="logo-link">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" class="logo">
+        </a>
+    </div>
+
+    <h2 style="color: rgb(236, 239, 238);">Incredible India Tourism</h2>
+
+    <nav>
+        <a href="/">Home</a>
+        <div class="nav-dropdown">
+            <a href="/states" class="dropdown-toggle">States</a>
+            <div class="dropdown-menu">
+                {% for state in all_states %}
+                <div class="state-item">
+                    <a href="/places/{{ state.id }}" class="state-link">{{ state.state_name }}</a>
+                    {% if state.places %}
+                    <div class="places-submenu">
+                        {% for place in state.places %}
+                        <a href="/place/{{ place.id }}" class="place-link">{{ place.place_name }}</a>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <a href="/contact">Contact</a>
+        <a href="/login">Admin</a>
+    </nav>
+
+</header>
+{% block content %}{% endblock %}
+
+<footer class="footer">
+<div class="footer-content">
+<div class="footer-section">
+<h4>Quick Links</h4>
+<ul>
+<li><a href="/">Home</a></li>
+<li><a href="/states">States</a></li>
+<li><a href="/contact">Contact</a></li>
+<li><a href="/login">Admin</a></li>
+</ul>
+</div>
+<div class="footer-section">
+<h4>Contact Us</h4>
+<p>TEAM NAME: 3STACK</p>
+<p>TEAM MEMBERS : </p>
+<h3><pre>KABILAN V</pre>
+<pre>AASHIK G</pre>
+<pre>KISHORE S</pre><h3>
+<p>Address: Hosur, India</p>
+</div>
+</div>
+<div class="footer-bottom">
+<p>© 2026 Incredible India Tourism. All Rights Reserved.</p>
+</div>
+</footer>
+
+</body>
+</html>

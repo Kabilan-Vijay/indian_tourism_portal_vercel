@@ -15,7 +15,9 @@ app.secret_key = "tourism_secret"
 # Vercel filesystem is read-only, so use /tmp for uploads when running in serverless.
 UPLOAD_FOLDER = os.environ.get("UPLOAD_FOLDER")
 if not UPLOAD_FOLDER:
-    if os.environ.get("VERCEL"):
+    # Vercel and other serverless runtimes have a read-only app filesystem.
+    # Detect by environment variable or by the deployment path prefix.
+    if os.environ.get("VERCEL") or os.path.abspath(__file__).startswith("/var/task"):
         UPLOAD_FOLDER = "/tmp/uploads"
     else:
         BASE_DIR = os.path.dirname(os.path.abspath(__file__))

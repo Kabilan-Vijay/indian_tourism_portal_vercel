@@ -12,13 +12,24 @@ app = Flask(__name__, template_folder="../templates", static_folder="../static")
 app.secret_key = "tourism_secret"
 
 # Upload settings for admin image uploads
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-UPLOAD_FOLDER = os.path.join(BASE_DIR, "static", "images")
+# Vercel filesystem is read-only, so use /tmp for uploads when running in serverless.
+UPLOAD_FOLDER = os.environ.get("UPLOAD_FOLDER")
+if not UPLOAD_FOLDER:
+    if os.environ.get("VERCEL"):
+        UPLOAD_FOLDER = "/tmp/uploads"
+    else:
+        BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+        UPLOAD_FOLDER = os.path.join(BASE_DIR, "static", "images")
+
 ALLOWED_IMAGE_EXTENSIONS = {"png", "jpg", "jpeg", "gif"}
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
-# Ensure upload folder exists
-os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+# Ensure upload folder exists when possible (non-read-only filesystems)
+try:
+    os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+except OSError:
+    # In serverless/read-only environments, uploads will need to be handled differently.
+    pass
 
 
 def allowed_file(filename):

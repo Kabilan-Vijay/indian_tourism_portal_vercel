@@ -5,46 +5,174 @@
 <div class="hero">
     <div class="hero-content">
         <h1>Explore Incredible India</h1>
-        <p>Discover the magic of culture, history, and natural beauty</p>
-        <a href="/states" class="btn hero-btn">Start Exploring</a>
+        <p>Discover the magic of culture, history, and natural beauty across the land of diversity</p>
+        <a href="/states" class="btn hero-btn">Start Exploring →</a>
+    </div>
+    <!-- Floating decorative elements -->
+    <div class="hero-floats">
+        <span class="float-element float-1">🕉️</span>
+        <span class="float-element float-2">🪷</span>
+        <span class="float-element float-3">🏛️</span>
+        <span class="float-element float-4">🎪</span>
     </div>
 </div>
 
 <section class="welcome-section">
-    <div class="welcome-container">
+    <div class="welcome-container animate-on-scroll">
         <h2 class="section-title">Welcome to Incredible India</h2>
         <p class="front1">
             Welcome to the Incredible India Tourism Portal! Discover the rich tapestry of culture, history, and natural beauty that India has to offer. From the majestic Himalayas in the north to the serene backwaters of Kerala in the south, from the vibrant festivals of Rajasthan to the tranquil beaches of Goa, India is a land of endless wonders. Whether you're an adventure seeker, a history buff, or a culture enthusiast, there's something for everyone in this incredible country. Start your journey today and explore the diverse states and their unique attractions!
-            <br>
-            <br>~ The Incredible India Tourism Team
+            <br><br>~ The Incredible India Tourism Team
         </p>
+    </div>
+</section>
+
+<!-- Animated Stats Counter -->
+<section class="stats-counter-section">
+    <div class="stats-counter-grid">
+        <div class="counter-card animate-on-scroll">
+            <div class="counter-icon">🏛️</div>
+            <div class="counter-number" data-target="5">0</div>
+            <div class="counter-label">States Covered</div>
+        </div>
+        <div class="counter-card animate-on-scroll">
+            <div class="counter-icon">📍</div>
+            <div class="counter-number" data-target="7">0</div>
+            <div class="counter-label">Tourist Places</div>
+        </div>
+        <div class="counter-card animate-on-scroll">
+            <div class="counter-icon">🖼️</div>
+            <div class="counter-number" data-target="14">0</div>
+            <div class="counter-label">Gallery Photos</div>
+        </div>
+        <div class="counter-card animate-on-scroll">
+            <div class="counter-icon">🏆</div>
+            <div class="counter-number" data-target="3">0</div>
+            <div class="counter-label">UNESCO Sites</div>
+        </div>
     </div>
 </section>
 
 <section class="states-section">
     <div class="states-container">
-        <h2 class="section-title">Explore Our States</h2>
-        <p class="section-subtitle">Select a state to discover its unique attractions and treasures</p>
+        <h2 class="section-title animate-on-scroll">Explore Our States</h2>
+        <p class="section-subtitle animate-on-scroll">Select a state to discover its unique attractions and treasures</p>
         
         <div class="state-grid">
             {% for state in states %}
-            <div class="state-card">
+            <div class="state-card animate-on-scroll tilt-card">
                 <div class="state-image-wrapper">
                     <img src="{{ url_for('static', filename='images/' + state.image) }}" alt="{{ state.state_name }}">
                     <div class="state-overlay">
                         <span class="state-label">Explore</span>
                     </div>
                 </div>
-
                 <div class="state-info">
                     <h3>{{ state.state_name }}</h3>
                     <p>{{ state.description }}</p>
-                    <a href="/places/{{ state.id }}" class="btn state-btn">View Places</a>
+                    <a href="/places/{{ state.id }}" class="btn state-btn">View Places →</a>
                 </div>
             </div>
             {% endfor %}
         </div>
     </div>
 </section>
+
+<style>
+/* Floating hero elements */
+.hero-floats { position: absolute; inset: 0; z-index: 1; pointer-events: none; overflow: hidden; }
+.float-element {
+    position: absolute; font-size: 36px; opacity: 0.25;
+    animation: floatAround 8s ease-in-out infinite;
+}
+.float-1 { top: 15%; left: 8%; animation-delay: 0s; }
+.float-2 { top: 60%; right: 10%; animation-delay: 2s; font-size: 42px; }
+.float-3 { bottom: 20%; left: 20%; animation-delay: 4s; }
+.float-4 { top: 25%; right: 20%; animation-delay: 6s; font-size: 30px; }
+
+@keyframes floatAround {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    25% { transform: translateY(-20px) rotate(5deg); }
+    50% { transform: translateY(-10px) rotate(-3deg); }
+    75% { transform: translateY(-25px) rotate(4deg); }
+}
+
+/* Stats Counter Section */
+.stats-counter-section {
+    padding: 70px 20px;
+    background: linear-gradient(135deg, rgba(255,153,51,0.05), rgba(19,136,8,0.04));
+}
+.stats-counter-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 24px; max-width: 900px; margin: 0 auto;
+}
+.counter-card {
+    text-align: center; padding: 30px 20px;
+    background: var(--glass-bg); backdrop-filter: blur(10px);
+    border-radius: var(--radius); box-shadow: var(--card-shadow);
+    border: 1px solid var(--glass-border);
+    transform: perspective(600px) rotateX(0);
+    transition: var(--transition);
+}
+.counter-card:hover {
+    transform: perspective(600px) rotateX(3deg) translateY(-8px);
+    box-shadow: var(--card-shadow-hover);
+}
+.counter-icon { font-size: 40px; margin-bottom: 12px; }
+.counter-number {
+    font-size: 42px; font-weight: 900; color: var(--navy);
+    background: linear-gradient(135deg, var(--saffron), var(--lotus-pink));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.counter-label { font-size: 14px; color: var(--warm-gray); font-weight: 600; margin-top: 6px; text-transform: uppercase; letter-spacing: 1px; }
+</style>
+
+<script>
+// Animated counter
+function animateCounters() {
+    document.querySelectorAll('.counter-number').forEach(counter => {
+        const target = +counter.getAttribute('data-target');
+        const duration = 2000;
+        const start = performance.now();
+        function update(now) {
+            const elapsed = now - start;
+            const progress = Math.min(elapsed / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3);
+            counter.textContent = Math.round(eased * target);
+            if (progress < 1) requestAnimationFrame(update);
+        }
+        requestAnimationFrame(update);
+    });
+}
+
+// 3D Tilt effect on cards
+document.querySelectorAll('.tilt-card').forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const rotateX = (y - centerY) / centerY * -6;
+        const rotateY = (x - centerX) / centerX * 6;
+        card.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-12px)`;
+    });
+    card.addEventListener('mouseleave', () => {
+        card.style.transform = 'perspective(800px) rotateX(0) rotateY(0) translateY(0)';
+    });
+});
+
+// Trigger counter when in view
+const counterObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            animateCounters();
+            counterObserver.unobserve(entry.target);
+        }
+    });
+}, { threshold: 0.3 });
+const counterSection = document.querySelector('.stats-counter-section');
+if (counterSection) counterObserver.observe(counterSection);
+</script>
 
 {% endblock %}

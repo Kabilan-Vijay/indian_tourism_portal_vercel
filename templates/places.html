@@ -5,27 +5,27 @@
 {% if state %}
 <div class="places-header">
     {% if state.state_name == 'Uttar Pradesh' %}
-        <h2 class="places-title">Uttar Pradesh - Land of Heritage & Spirituality</h2>
+        <h2 class="places-title">Uttar Pradesh — Land of Heritage & Spirituality</h2>
         <p class="places-subtitle">Explore the heart of India's cultural heritage</p>
-        <p class="places-description">Discover the timeless beauty of Uttar Pradesh, home to the iconic Taj Mahal, sacred ghats of Varanasi, and ancient cities that have shaped India's history. From Mughal monuments to spiritual centers, experience the rich tapestry of India's most populous state.</p>
+        <p class="places-description">Discover the timeless beauty of Uttar Pradesh, home to the iconic Taj Mahal, sacred ghats of Varanasi, and ancient cities that have shaped India's history.</p>
     {% elif state.state_name == 'Tamil Nadu' %}
-        <h2 class="places-title">Tamil Nadu - Temple Heritage & Coastal Charm</h2>
+        <h2 class="places-title">Tamil Nadu — Temple Heritage & Coastal Charm</h2>
         <p class="places-subtitle">Where ancient temples meet pristine beaches</p>
-        <p class="places-description">Immerse yourself in Tamil Nadu's Dravidian architecture and spiritual heritage. From the magnificent Meenakshi Temple in Madurai to the scenic hill stations of Ooty, explore a state that seamlessly blends ancient traditions with natural beauty and coastal wonders.</p>
+        <p class="places-description">Immerse yourself in Tamil Nadu's Dravidian architecture and spiritual heritage. From the magnificent Meenakshi Temple to the scenic Ooty hills.</p>
     {% elif state.state_name == 'Karnataka' %}
-        <h2 class="places-title">Karnataka - Heritage & Innovation</h2>
+        <h2 class="places-title">Karnataka — Heritage & Innovation</h2>
         <p class="places-subtitle">Where ancient ruins meet modern innovation</p>
-        <p class="places-description">Journey through Karnataka's fascinating blend of history and progress. Marvel at the UNESCO World Heritage site of Hampi, explore the coffee plantations of Coorg, and discover a state that has been a cradle of Indian civilization and technological advancement.</p>
+        <p class="places-description">Journey through Karnataka's fascinating blend of history and progress. Marvel at the UNESCO World Heritage site of Hampi and explore Coorg's coffee plantations.</p>
     {% elif state.state_name == 'Rajasthan' %}
-        <h2 class="places-title">Rajasthan - Royal Palaces & Desert Majesty</h2>
+        <h2 class="places-title">Rajasthan — Royal Palaces & Desert Majesty</h2>
         <p class="places-subtitle">The land of kings and golden sands</p>
-        <p class="places-description">Step into the world of Rajasthan's royal heritage and desert landscapes. From majestic forts and palaces to vibrant festivals and camel safaris, experience the regal charm and cultural richness of India's largest state, where every corner tells a story of valor and tradition.</p>
+        <p class="places-description">Step into the world of Rajasthan's royal heritage and desert landscapes. Majestic forts, vibrant festivals, and camel safaris await.</p>
     {% elif state.state_name == 'Gujarat' %}
-        <h2 class="places-title">Gujarat - Cultural Diversity & Natural Wonders</h2>
+        <h2 class="places-title">Gujarat — Cultural Diversity & Natural Wonders</h2>
         <p class="places-subtitle">Where tradition meets the sea</p>
-        <p class="places-description">Discover Gujarat's unique blend of cultural diversity and natural beauty. From the mesmerizing white salt desert of Rann of Kutch to the wildlife sanctuaries of Gir, explore a state known for its entrepreneurial spirit, vibrant festivals, and stunning coastal landscapes.</p>
+        <p class="places-description">Discover Gujarat's blend of cultural diversity and natural beauty. From the mesmerizing Rann of Kutch to the wildlife sanctuaries of Gir.</p>
     {% else %}
-        <h2 class="places-title">{{ state.state_name }} - Tourist Destinations</h2>
+        <h2 class="places-title">{{ state.state_name }} — Tourist Destinations</h2>
         <p class="places-subtitle">Discover amazing places to visit</p>
         <p class="places-description">{{ state.description or 'Explore the beautiful tourist destinations in this region.' }}</p>
     {% endif %}
@@ -34,29 +34,39 @@
 <div class="places-header">
     <h2 class="places-title">Tourist Places</h2>
     <p class="places-subtitle">Discover the most beautiful destinations</p>
-    <p class="places-description">Explore stunning tourist destinations that showcase the rich heritage and natural beauty of this region.</p>
 </div>
 {% endif %}
 
-<div class="places-grid">
-
-{% for place in places %}
-
-<div class="place-card">
-    <div class="place-image-wrapper">
-        <img src="{{ url_for('static', filename='images/' + place.image) }}" alt="{{ place.place_name }}">
-        <div class="place-overlay"></div>
+<div class="places-grid" style="padding: 0 40px 60px; max-width: 1400px; margin: 0 auto;">
+    {% for place in places %}
+    <div class="place-card animate-on-scroll tilt-card">
+        <div class="place-image-wrapper">
+            <img src="{{ url_for('static', filename='images/' + place.image) }}" alt="{{ place.place_name }}">
+            <div class="place-overlay"></div>
+        </div>
+        <div class="place-content">
+            <h3>{{ place.place_name }}</h3>
+            <p>{{ place.description }}</p>
+            <a href="/place/{{ place.id }}" class="btn place-btn">Explore Gallery →</a>
+        </div>
     </div>
-
-    <div class="place-content">
-        <h3>{{ place.place_name }}</h3>
-        <p>{{ place.description }}</p>
-        <a href="/place/{{ place.id }}" class="btn place-btn">Explore Gallery</a>
-    </div>
+    {% endfor %}
 </div>
 
-{% endfor %}
-
-</div>
+<script>
+document.querySelectorAll('.tilt-card').forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const rotateX = (y - rect.height/2) / (rect.height/2) * -5;
+        const rotateY = (x - rect.width/2) / (rect.width/2) * 5;
+        card.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-10px)`;
+    });
+    card.addEventListener('mouseleave', () => {
+        card.style.transform = 'perspective(800px) rotateX(0) rotateY(0) translateY(0)';
+    });
+});
+</script>
 
 {% endblock %}

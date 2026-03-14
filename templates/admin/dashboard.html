@@ -3,32 +3,30 @@
 {% block content %}
 
 <div class="dashboard-container">
-    <div class="dashboard-header">
+    <div class="dashboard-header animate-on-scroll">
         <h1>Admin Dashboard</h1>
         <p class="subtitle">Welcome back! Manage your tourism portal content</p>
     </div>
 
     <div class="stats-grid">
-        <div class="stat-card">
+        <div class="stat-card animate-on-scroll">
             <div class="stat-icon">🏛️</div>
             <div class="stat-content">
                 <h3>Total States</h3>
                 <p class="stat-number">{{ states }}</p>
             </div>
-            <div class="stat-bar"></div>
         </div>
 
-        <div class="stat-card">
+        <div class="stat-card animate-on-scroll">
             <div class="stat-icon">📍</div>
             <div class="stat-content">
                 <h3>Total Places</h3>
                 <p class="stat-number">{{ places }}</p>
             </div>
-            <div class="stat-bar"></div>
         </div>
     </div>
 
-    <div class="actions-section">
+    <div class="actions-section animate-on-scroll">
         <h2>Quick Actions</h2>
         <div class="actions-grid">
             <a href="/admin/add_place" class="action-card">
